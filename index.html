@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#28221d">
+<meta name="description" content="Compartilhe seu momento no Iso Café, revele uma foto e descubra um carinho da casa.">
+<title>Iso Café — Revele seu momento</title>
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="loading">
+
+<section id="intro" class="screen" aria-hidden="true">
+  <div class="shutter"></div><div class="lens"></div>
+  <div class="intro-mark">
+    <img src="assets/images/logo-original.png" alt="Iso Café">
+    <p>Um momento para guardar</p>
+  </div>
+</section>
+
+<section id="home" class="screen hidden">
+  <div class="card">
+    <img class="logo" src="assets/images/logo-original.png" alt="Iso Café">
+    <div class="eyebrow">Seu momento. Sua foto.</div>
+    <h1>Compartilhe seu café.</h1>
+    <p class="copy">Tire uma foto no Iso Café, publique no seu Story e marque a gente.</p>
+    <div class="actions">
+      <a class="btn primary" id="instagramBtn" href="https://www.instagram.com/isocaferg/" target="_blank" rel="noopener">📷 Abrir Instagram<span class="instagram-handle">@isocaferg</span></a>
+      <button class="btn secondary" id="publishedBtn">Já publiquei</button>
+    </div>
+    <p class="small">Depois de publicar, toque em “Já publiquei” para descobrir se você ganhou um prêmio.</p>
+  </div>
+</section>
+
+<section id="photo" class="screen hidden" aria-labelledby="photoTitle">
+  <div class="photo-experience">
+    <header class="photo-header">
+      <div class="eyebrow">Iso Café · memórias à mesa</div>
+      <h2 class="photo-heading" id="photoTitle">Revele seu momento.</h2>
+      <p class="photo-instructions" id="photoInstructions">Segure a foto e mova para os lados.<br>Deixe a lembrança aparecer, aos poucos.</p>
+    </header>
+    <div class="photo-stage" id="photoStage">
+      <div class="photo-shell" id="photoShell">
+        <div class="photo-turner" id="photoTurner">
+          <button class="photo-face polaroid" id="polaroid" type="button" aria-label="Foto para revelar. Arraste para os lados ou pressione as setas, Enter ou espaço repetidamente." aria-describedby="photoInstructions">
+            <span class="photo-window" aria-hidden="true">
+              <span class="photo-emulsion" id="photoEmulsion">
+                <img class="photo-image" id="photoImage" src="assets/images/cafeteria.png" alt="" draggable="false" width="1254" height="1254">
+                <svg class="discount-ink hidden" id="discountInk" viewBox="0 0 1254 1254" aria-hidden="true" focusable="false">
+                  <g transform="translate(470 878) rotate(18) skewX(-8) scale(1 .85)" text-anchor="middle">
+                    <text id="discountInkValue" x="0" y="-12" font-size="90"></text>
+                    <text id="discountInkCaption" x="0" y="52" font-size="38"></text>
+                  </g>
+                </svg>
+              </span>
+              <span class="photo-fog" id="photoFog"></span><span class="photo-light"></span>
+            </span>
+            <span class="photo-caption" aria-hidden="true">
+              <span class="photo-caption-title" id="photoCaption">Um instante de carinho.</span>
+              <span class="photo-caption-brand">Iso Café · feito de bons momentos</span>
+            </span>
+          </button>
+          <article class="photo-face photo-back" id="photoBack" aria-label="Dedicatória e resultado da participação" aria-hidden="true" inert>
+            <p class="handwritten dedication-date" id="dedicationDate"></p>
+            <p class="handwritten dedication-greeting" id="dedicationGreeting"></p>
+            <p class="handwritten dedication-message" id="dedicationMessage"></p>
+            <p class="handwritten dedication-code hidden" id="dedicationCode"></p>
+            <p class="handwritten dedication-note" id="dedicationNote"></p>
+            <p class="handwritten dedication-signature" id="dedicationSignature"></p>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="photo-controls">
+      <div class="photo-action-slot">
+        <progress class="photo-progress" id="photoProgress" max="100" value="0" aria-label="Revelação da foto"></progress>
+        <button class="btn primary photo-flip-btn hidden" id="flipPhotoBtn" type="button" aria-controls="photoTurner">Virar foto</button>
+      </div>
+      <p class="photo-status" id="photoStatus" role="status" aria-live="polite">Mova a foto para começar · 0%</p>
+    </div>
+  </div>
+</section>
+<section id="result" class="screen hidden">
+  <div class="card" id="resultCard">
+    <div class="result-icon" id="resultIcon">☕</div>
+    <div class="eyebrow" id="resultEyebrow">Resultado</div>
+    <h2 class="result-title" id="resultTitle"></h2>
+    <div class="prize" id="prize"></div>
+    <div class="code hidden" id="code"></div>
+    <p class="footer-note" id="resultNote"></p>
+    <div class="actions result-actions">
+      <a class="btn primary" href="https://www.instagram.com/isocaferg/" target="_blank" rel="noopener">Seguir @isocaferg</a>
+    </div>
+  </div>
+</section>
+
+<div id="confetti" class="confetti"></div>
+
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>
