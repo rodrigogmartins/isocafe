@@ -108,6 +108,7 @@ function resetPhotoPosition() {
 }
 
 function startPhotoGame() {
+  stopPhoneMotion();
   // O sorteio continua idêntico à versão A; os gestos só revelam o resultado.
   photoGame = { prize:weightedRandom(prizes), progress:0, completed:false, announced:-1, startedAt:null, flipped:false, written:false, code:"", date:new Date() };
   if (photoPointer !== null && polaroid.hasPointerCapture(photoPointer)) polaroid.releasePointerCapture(photoPointer);
@@ -136,6 +137,7 @@ function startPhotoGame() {
   renderPhoto();
   show("photo");
   fitPhoto();
+  configurePhoneMotion();
   polaroid.focus({ preventScroll:true });
 }
 
@@ -202,6 +204,8 @@ function prepareDedication() {
 function completePhoto() {
   if (!photoGame || photoGame.completed || photoGame.progress < 1) return;
   photoGame.completed = true;
+  stopPhoneMotion();
+  $("enableMotionBtn").classList.add("hidden");
   photoGame.code = photoGame.prize.id !== "nothing" ? makeCode() : "";
   polaroid.classList.add("developed");
   polaroid.setAttribute("aria-disabled", "true");
@@ -276,3 +280,135 @@ $("publishedBtn").addEventListener("click", () => {
   if (!TEST_MODE) localStorage.setItem(KEY, JSON.stringify({ timestamp:Date.now() }));
   startPhotoGame();
 });
+
+
+const MOTION_SHAKE_THRESHOLD = 3;
+const MOTION_SAMPLE_MS = 50;
+const MOTION_COOLDOWN_MS = 160;
+const motionState = { enabled:false, pending:false, granted:false, requestId:0, previous:null, lastSample:null, lastShake:-Infinity, probeTimer:null, settleTimer:null };
+
+function canUsePhoneMotion() {
+  return window.isSecureContext && typeof window.DeviceMotionEvent !== "undefined" &&
+    (navigator.maxTouchPoints > 0 || window.matchMedia("(pointer: coarse)").matches);
+}
+
+function stopPhoneMotion() {
+  motionState.requestId++;
+  motionState.enabled = false;
+  motionState.pending = false;
+  motionState.previous = null;
+  motionState.lastSample = null;
+  motionState.lastShake = -Infinity;
+  clearTimeout(motionState.probeTimer);
+  clearTimeout(motionState.settleTimer);
+  window.removeEventListener("devicemotion", handlePhoneMotion);
+  $("enableMotionBtn").disabled = false;
+  $("enableMotionBtn").setAttribute("aria-pressed", "false");
+  $("enableMotionBtn").textContent = "Ativar movimento do celular";
+}
+
+function configurePhoneMotion() {
+  $("enableMotionBtn").classList.toggle("hidden", !canUsePhoneMotion());
+}
+
+function motionFallback(message) {
+  stopPhoneMotion();
+  resetPhotoPosition();
+  if (photoGame && !photoGame.completed) {
+    $("photoInstructions").innerHTML = message + "<br>Você pode continuar arrastando a foto.";
+    $("enableMotionBtn").textContent = "Tentar ativar movimento";
+  }
+}
+
+function motionVector(event) {
+  for (const source of ["acceleration", "accelerationIncludingGravity"]) {
+    const value = event[source];
+    if (value && [value.x, value.y, value.z].every(Number.isFinite)) {
+      return { x:value.x, y:value.y, z:value.z, source:source };
+    }
+  }
+  return null;
+}
+
+function handlePhoneMotion(event) {
+  if (!motionState.enabled || !photoGame || photoGame.completed || document.hidden || $("photo").classList.contains("hidden")) return;
+  const vector = motionVector(event);
+  if (!vector) return;
+  clearTimeout(motionState.probeTimer);
+  const now = performance.now();
+  const elapsed = motionState.lastSample === null ? Infinity : now - motionState.lastSample;
+  if (elapsed < MOTION_SAMPLE_MS) return;
+  const previous = motionState.previous;
+  motionState.previous = vector;
+  motionState.lastSample = now;
+  // A primeira amostra e pausas longas só estabelecem a referência.
+  if (!previous || previous.source !== vector.source || elapsed > 500) return;
+  const delta = Math.hypot(vector.x - previous.x, vector.y - previous.y, vector.z - previous.z);
+  // Diferenças entre amostras evitam contar a gravidade de um aparelho parado.
+  if (delta < MOTION_SHAKE_THRESHOLD || now - motionState.lastShake < MOTION_COOLDOWN_MS || photoPointer !== null) return;
+  motionState.lastShake = now;
+  updatePhoto(Math.min(.075, delta * .008));
+  if (!photoGame.completed && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    photoShell.style.setProperty("--tilt", (vector.x >= previous.x ? 2 : -6) + "deg");
+    clearTimeout(motionState.settleTimer);
+    motionState.settleTimer = setTimeout(resetPhotoPosition, 180);
+  }
+}
+
+$("enableMotionBtn").addEventListener("click", async () => {
+  if (!photoGame || photoGame.completed || motionState.pending || !canUsePhoneMotion()) return;
+  if (motionState.enabled) {
+    stopPhoneMotion();
+    resetPhotoPosition();
+    $("photoInstructions").innerHTML = "Segure a foto e mova para os lados.<br>Deixe a lembrança aparecer, aos poucos.";
+    return;
+  }
+  motionState.pending = true;
+  const requestId = ++motionState.requestId;
+  $("enableMotionBtn").disabled = true;
+  $("enableMotionBtn").textContent = "Aguardando permissão...";
+  try {
+    // O pedido é iniciado diretamente pelo toque, como exigido no iOS.
+    if (!motionState.granted && typeof window.DeviceMotionEvent.requestPermission === "function") {
+      const permission = await window.DeviceMotionEvent.requestPermission();
+      if (requestId !== motionState.requestId) return;
+      if (permission !== "granted") {
+        motionFallback("Movimento não autorizado.");
+        return;
+      }
+      motionState.granted = true;
+    }
+    if (requestId !== motionState.requestId || photoGame.completed || document.hidden) return;
+    motionState.pending = false;
+    motionState.enabled = true;
+    motionState.previous = null;
+    motionState.lastSample = null;
+    motionState.lastShake = -Infinity;
+    $("enableMotionBtn").disabled = false;
+    $("enableMotionBtn").setAttribute("aria-pressed", "true");
+    $("enableMotionBtn").textContent = "Movimento ativado · desativar";
+    $("photoInstructions").innerHTML = "Balance suavemente o celular.<br>Você também pode arrastar a foto.";
+    window.addEventListener("devicemotion", handlePhoneMotion, { passive:true });
+    motionState.probeTimer = setTimeout(() => {
+      if (motionState.enabled) motionFallback("Não recebemos dados do sensor.");
+    }, 3500);
+  } catch (error) {
+    if (requestId === motionState.requestId) motionFallback("Não foi possível ativar o movimento.");
+  } finally {
+    if (requestId === motionState.requestId) {
+      motionState.pending = false;
+      $("enableMotionBtn").disabled = false;
+    }
+  }
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) return;
+  const wasActive = motionState.enabled || motionState.pending;
+  stopPhoneMotion();
+  resetPhotoPosition();
+  if (wasActive && photoGame && !photoGame.completed) {
+    $("photoInstructions").innerHTML = "Movimento pausado.<br>Ative novamente ou arraste a foto.";
+  }
+});
+window.addEventListener("pagehide", stopPhoneMotion);

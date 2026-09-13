@@ -39,7 +39,7 @@ Photography connects the desired action — capturing and sharing a visit — wi
 ## How
 
 1. **Share:** the QR code opens a page inviting the customer to post a Story and tag the café.
-2. **Develop:** moving the photo from side to side brings it into focus; development requires movement and takes at least **4 seconds**.
+2. **Develop:** drag the photo or enable phone motion and gently shake the device; development requires movement and takes at least **4 seconds**.
 3. **Turn:** “Virar foto” (“Turn photo”) presents the dedication in gradually appearing handwriting.
 4. **Discover:** the date, message and any prize code stay on the back of the same card.
 5. **Present:** winners show the photo and code to the team.
@@ -88,6 +88,14 @@ For a quick preview, open `index.html` directly in a browser. A local server is 
 To test on a phone, connect the computer and phone to the same Wi-Fi network and open `http://COMPUTER-IP:8000` on the phone while the server is running.
 
 Images and QR assets are local. Fonts load from Google Fonts; offline, the browser uses the fallback fonts defined in CSS.
+
+### Develop by shaking the phone
+
+On a compatible phone, tap **?Ativar movimento do celular?** (?Enable phone motion?) below the photo. Allow sensor access when prompted and gently shake the device. Dragging and keyboard controls remain available. Use the same button to disable the sensor.
+
+To test phone sensors, open the published page over **HTTPS**. Your computer's local-network HTTP address can be used to test dragging, but does not provide the secure context required for sensor access. Permission requests must originate from a user gesture; see the [motion API documentation](https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent/requestPermission_static).
+
+The sensor pauses when you leave the page and stops when development finishes. If permission or sensor data is unavailable, continue dragging the photo. Both modes use the same probabilities and 4-second minimum.
 
 ## Configuration
 
