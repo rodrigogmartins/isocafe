@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/images/logo-original.png" alt="Iso Café" width="180">
+  <img src="assets/images/logo.svg" alt="Iso Café" width="180">
 </p>
 
 <p align="center">
@@ -15,8 +15,8 @@
 </p>
 
 <p align="center">
-  <a href="https://rodrigogmartins.github.io/isocaferg"><img src="assets/images/qr-code.png" width="220" alt="QR code da experiência Iso Café"></a><br>
-  <a href="https://rodrigogmartins.github.io/isocaferg"><strong>Abrir a experiência do Iso Café</strong></a><br>
+  <a href="https://rodrigogmartins.github.io/isocafe/"><img src="assets/images/qr-code.png" width="220" alt="QR code da experiência Iso Café"></a><br>
+  <a href="https://rodrigogmartins.github.io/isocafe/"><strong>Abrir a experiência do Iso Café</strong></a><br>
   Aponte a câmera do celular para apresentar aos donos.
 </p>
 
@@ -121,6 +121,7 @@ assets/
   css/styles.css
   js/app.js
   images/
+    logo.svg
     logo-original.png
     cafe.png
     sobremesa.png
@@ -139,9 +140,9 @@ README.pt-br.md
 
 ## Apresentar e publicar
 
-O QR code aponta exatamente para **https://rodrigogmartins.github.io/isocaferg**. Esse endereço precisa estar publicado para funcionar no celular dos donos; gerar o QR code não publica o site.
+O QR code aponta exatamente para **https://rodrigogmartins.github.io/isocafe/**. Esse endereço precisa estar publicado para funcionar no celular dos donos; gerar o QR code não publica o site.
 
-Para hospedar no GitHub Pages, publique a raiz deste projeto no repositório correspondente, mantendo `index.html` e `assets/` juntos. Os caminhos relativos suportam o endereço `/isocaferg/`.
+Para hospedar no GitHub Pages, publique a raiz deste projeto no repositório correspondente, mantendo `index.html` e `assets/` juntos. Os caminhos relativos suportam o endereço `/isocafe/`.
 
 Use o [PNG do QR code](assets/images/qr-code.png) para compartilhar ou o [SVG](assets/images/qr-code.svg) para imprimir. Preserve a margem livre ao redor do código.
 
@@ -152,7 +153,7 @@ Esta é uma demonstração funcional no navegador. A raspadinha foi removida; a 
 - “Já publiquei” é uma confirmação do cliente; não há verificação de Stories pela API do Instagram.
 - Sorteio, bloqueio e códigos são locais. Os códigos não são registrados em servidor nem marcados como resgatados.
 - As fotos são ilustrativas, geradas por IA; não documentam o espaço ou os produtos reais. Substitua por fotos oficiais quando disponíveis.
-- O logo original foi preservado. Na página, filtros e mistura de cores do CSS deixam o desenho escuro e eliminam visualmente o fundo cinza. O arquivo ainda não é um PNG transparente; um arquivo oficial poderá substituí-lo.
+- O desenho original foi preservado em `logo-original.png`. O arquivo `logo.svg` reutiliza esse desenho com um filtro de transparência e tinta escura; no loading, o CSS deixa o traço claro. Um arquivo oficial em alta resolução pode substituí-lo futuramente.
 - Analytics, estoque de prêmios, validação de resgates e regras em servidor são próximos passos para operar uma campanha e medir seu impacto.
 
 **Proposta do piloto:** apresentar aos donos, validar a experiência com clientes, medir compartilhamentos e resgates e decidir a evolução com base nos resultados.

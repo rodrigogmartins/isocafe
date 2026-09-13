@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/images/logo-original.png" alt="Iso Café" width="180">
+  <img src="assets/images/logo.svg" alt="Iso Café" width="180">
 </p>
 
 <p align="center">
@@ -15,8 +15,8 @@
 </p>
 
 <p align="center">
-  <a href="https://rodrigogmartins.github.io/isocaferg"><img src="assets/images/qr-code.png" width="220" alt="QR code for the Iso Café experience"></a><br>
-  <a href="https://rodrigogmartins.github.io/isocaferg"><strong>Open the Iso Café experience</strong></a><br>
+  <a href="https://rodrigogmartins.github.io/isocafe/"><img src="assets/images/qr-code.png" width="220" alt="QR code for the Iso Café experience"></a><br>
+  <a href="https://rodrigogmartins.github.io/isocafe/"><strong>Open the Iso Café experience</strong></a><br>
   Scan with a phone camera for a simple demonstration to the owners.
 </p>
 
@@ -121,6 +121,7 @@ assets/
   css/styles.css
   js/app.js
   images/
+    logo.svg
     logo-original.png
     cafe.png
     sobremesa.png
@@ -139,9 +140,9 @@ README.pt-br.md
 
 ## Presenting and publishing
 
-The QR code encodes exactly **https://rodrigogmartins.github.io/isocaferg**. That address must be published for it to work on the owners' phones; generating the QR code does not publish the site.
+The QR code encodes exactly **https://rodrigogmartins.github.io/isocafe/**. That address must be published for it to work on the owners' phones; generating the QR code does not publish the site.
 
-To host with GitHub Pages, publish this project root in the corresponding repository, keeping `index.html` and `assets/` together. Relative paths support the `/isocaferg/` address.
+To host with GitHub Pages, publish this project root in the corresponding repository, keeping `index.html` and `assets/` together. Relative paths support the `/isocafe/` address.
 
 Use the [PNG QR code](assets/images/qr-code.png) for sharing or the [SVG](assets/images/qr-code.svg) for printing. Preserve the clear margin around it.
 
@@ -152,7 +153,7 @@ This is a working browser prototype. The scratch card has been removed; instant-
 - “Já publiquei” is customer confirmation; there is no Instagram API verification of Stories.
 - The draw, participation lock and codes are local. Codes are not registered on a server or marked as redeemed.
 - Photos are AI-generated illustrations, not documentation of the real café or products. Replace them with official photos when available.
-- The original logo is preserved. CSS filters and blending make the mark dark and visually remove its gray background on the page. The file is not yet a transparent PNG; an official export can replace it.
+- The original drawing is preserved in `logo-original.png`. `logo.svg` reuses it with a transparency filter and dark ink; CSS makes the loading mark light. An official high-resolution export can replace it later.
 - Analytics, reward inventory, redemption validation and server-side participation rules are next steps for running a campaign and measuring its impact.
 
 **Pilot proposal:** present to the owners, validate with customers, measure sharing and redemption, and decide the next iteration based on results.

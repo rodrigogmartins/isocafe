@@ -38,7 +38,7 @@ body.loading { overflow:hidden; }
   clip-path:polygon(evenodd, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
 }
 #intro.opening .shutter {
-  animation:shutterOpen 1.9s cubic-bezier(.45,0,.15,1) both;
+  animation:shutterOpen 2.2s cubic-bezier(.45,0,.15,1) both;
   will-change:transform,clip-path;
 }
 .lens {
@@ -122,7 +122,7 @@ h1 {
   background:linear-gradient(120deg,#fffdf6,#eee6d8); color:#4a3424;
   border:1px solid #d6b98f; border-radius:22px; box-shadow:0 20px 55px #0005;
 }
-#home .logo { display:block; width:120px; height:120px; margin:0 auto 16px; filter:grayscale(1) invert(1) contrast(3); mix-blend-mode:multiply; }
+#home .logo { display:block; width:120px; height:120px; margin:0 auto 16px; filter:none; mix-blend-mode:normal; }
 #home .eyebrow { color:#806548; font-size:10px; }
 #home h1 { font-size:clamp(33px,8vw,42px); line-height:1.02; }
 #home .copy { color:#6e6054; margin-bottom:20px; font-size:14px; }
@@ -130,7 +130,7 @@ h1 {
 #home .secondary { color:#59422d; border-color:#bda688; }
 #home .small { color:#796957; line-height:1.5; }
 #home .btn:focus-visible { outline:3px solid #9d744b; outline-offset:3px; }
-.intro-mark img { mix-blend-mode:screen; filter:grayscale(1) contrast(3); }
+.intro-mark img { mix-blend-mode:normal; filter:brightness(0) invert(1); }
 .result-actions { margin-top:24px; }
 @media (max-height:700px) {
   #home { padding:16px; }
